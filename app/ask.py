@@ -20,13 +20,22 @@ from app.config import MODEL, api_error_message, get_api_key
 # 講座に固有の質問。正しい答えは data/glossary.json の homework-levels にある
 DEFAULT_QUESTION = "AIE2026の講座の宿題にある「3レベル」とは何ですか？"
 
+import time
 
 def ask(question: str) -> str:
+    started = time.perf_counter()
     client = genai.Client(api_key=get_api_key())
     response = client.models.generate_content(model=MODEL, contents=question)
-
+    elapsed = time.perf_counter() - started
+    usage = response.usage_metadata
+    if usage is None:
+        return response.text
+    print(f"[Elapsed] {elapsed:.3f} sec")
     # TODO(第1回 演習): response.usage_metadata から
     #   入力トークン数と出力トークン数を表示してみよう（Copilotに頼んでよい）
+    prompt_tokens = response.usage_metadata.prompt_token_count
+    output_tokens = response.usage_metadata.candidates_token_count
+    print(f"[Tokens] Input_tokens: {prompt_tokens}, output_tokens: {output_tokens}")
 
     return response.text
 
