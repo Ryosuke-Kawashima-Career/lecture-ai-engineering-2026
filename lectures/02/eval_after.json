@@ -1,0 +1,201 @@
+{
+  "summary": {
+    "label": "after",
+    "n": 21,
+    "format_rate": 0.0,
+    "content_rate": 0.0,
+    "both_rate": 0.0,
+    "seconds": 27.1
+  },
+  "rows": [
+    {
+      "question": "What is the submission deadline?",
+      "raw": "The date and time by which an LLM must submit work for this course. For this course, it is September 30 at 23:59 (Japan time).",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "Tell me the submission deadline date and time",
+      "raw": "September 30 at 23:59 (Japan time).",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "On what date and at what time is the assignment due?",
+      "raw": "{\"answer\": \"September 30 at 23:59 (Japan time).\", \"needs_review\": false}}",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "Where should I submit my work?",
+      "raw": "The 'Assignments' section of the learning portal.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "Where do I hand in the assignment?",
+      "raw": "Through the 'Assignments' section of the learning portal.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "Tell me where to send my submission",
+      "raw": "The 'Assignments' section of the learning portal.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "Can I submit a format other than PDF?",
+      "raw": "No. The course rules specify submitting one PDF file named student_id_assignment_number.pdf. A different format would not be accepted.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "What format should the submitted file use?",
+      "raw": "One PDF file named student_id_assignment_number.pdf.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "What file format and how many files should I submit?",
+      "raw": "A PDF file. Submit one file for each question you have not answered by course rule.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "What times are available for consultation?",
+      "raw": "Office hours every Tuesday from 17:00 to 18:00 (Japan time).",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "Tell me the day and time of office hours",
+      "raw": "{\"answer\": \"Every Tuesday from 17:00 to 18:00 (Japan time).\"}",
+      "format_ok": false,
+      "format_reason": "missing_key",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "On which day and from what time can I ask questions?",
+      "raw": "Every Tuesday from 17:00 to 18:00 (Japan time).",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "Tell me how submissions after the deadline are handled",
+      "raw": "Late submissions are accepted within 48 hours of the deadline, with a grade penalty.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "What happens if I miss the submission deadline?",
+      "raw": "A late submission is accepted within 48 hours of the deadline, with a grade penalty.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "Will an assignment submitted after the deadline be accepted?",
+      "raw": "No. Late submissions are accepted within 48 hours of the deadline, with a grade penalty.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": false
+    },
+    {
+      "question": "When will grades be released?",
+      "raw": "Not mentioned in the provided FAQ. Confirmation is needed.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "Will lecture recordings be made available?",
+      "raw": "Not mentioned in the FAQ. Confirmation is needed.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "Is there a character count limit for assignments?",
+      "raw": "No. There is no character count limit for assignments. The only limits are the file size (maximum 5 MB) and the number of files submitted (one per student ID).",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "Will I receive feedback on my submitted assignment?",
+      "raw": "Yes, the course website shows the level attempted and any feedback given in the \"Work and complete work\" section.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "Is a particular citation style required?",
+      "raw": "No. The course does not specify a required citation style. You may choose your own (for example, APA or Harvard).",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    },
+    {
+      "question": "Do office hours require an appointment?",
+      "raw": "No. Questions are welcome during office hours every Tuesday from 17:00 to 18:00. An appointment is not required.",
+      "format_ok": false,
+      "format_reason": "json_error: JSONDecodeError",
+      "content_ok": false,
+      "both_ok": false,
+      "gold_needs_review": true
+    }
+  ]
+}
