@@ -77,3 +77,13 @@ def get_lecture_summary(lecture: int) -> str:
         available = sorted(p.stem for p in (DATA_DIR / "lectures").glob("*.md"))
         return f"第{lecture}回の要点はまだありません。用意されている回: {', '.join(available)}"
     return path.read_text(encoding="utf-8")
+
+def make_quiz(lecture: int) -> str:
+    """Return quizes of the designated lecture (which starts with "1")
+    This function is called when asked to make some questions to test users' understanding.
+    """
+    path = DATA_DIR / "lectures" / f"{lecture:02d}.md"
+    if not path.exists():
+        available = sorted(p.stem for p in (DATA_DIR / "lectures").glob("*.md"))
+        return f"There is no {lecture}th lecture. Available ones are {', '.join(available)}"
+    return f"Make a quiz to test the user's understanding of the {lecture}th lecture"
