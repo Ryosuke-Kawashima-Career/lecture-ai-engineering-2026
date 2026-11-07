@@ -46,6 +46,31 @@
 ## 宿題
 
 - 取り組んだレベル：発展
-- やったこと：
-- 結果：
-- 気づき・疑問：
+- やったこと： (a) Use the same instructions and tools as the exercise agent, rewrite only the agent-building part with Google’s ADK, run it with adk run, and compare the code and answers.
+- 結果：I ran "PYTHONPATH=. uv run --with google-adk adk run adk_agent/glossary_agent". 
+The results were:
+```text
+[user]: Can you make some questions to test my understanding of lecture02 ?
+[glossary_agent]: 第2回の内容の理解度をチェックするための確認問題ですね！以下に3問出題します。考えてみてください。
+
+---
+
+### 第2回 確認問題
+
+1. **第1問**
+   第2回で扱う主要なトピックにおいて、モデルの効率化や軽量化に関連する手法としてよく挙げられる技術は何でしょうか？具体的な名称やアプローチを挙げて説明してみてください。
+
+2. **第2問**
+   講義内で登場した手法や概念を適用する際、学習データや計算コストの面でどのようなトレードオフが発生しますか？
+
+3. **第3問**
+   実際にコードやパイプラインに組み込む際、注意すべきボトルネックやパラメータ調整のポイントについて、あなたの言葉で1つ挙げてみてください。
+
+---
+
+答えや分からない部分があれば教えてくださいね。一緒に確認していきましょう！
+
+関係する回：第2回
+```
+
+- 気づき・疑問：I realized that the basic of AI agent is constant regardless of the frameworks we use. It is all about LLMs and agent harness including tools. I assume that if we have solid experience in one framework, we can move to another in less than a day.
