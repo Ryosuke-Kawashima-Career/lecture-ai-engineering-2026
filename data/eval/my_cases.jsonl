@@ -1,0 +1,1 @@
+{"id": "01", "category": "講座外", "question": "What is the main beneift of using Rust ?", "answer": "", "reference": {"glossary": ["hallucination"], "expected": "Explain some relevant of lectures with the key concepts in the question (in this case Rust). However, it should also mention that Rust is out of scope of the lecture at the same time."}}
