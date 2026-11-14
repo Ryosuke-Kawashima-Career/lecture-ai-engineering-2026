@@ -60,6 +60,35 @@
 ## 宿題
 
 - 取り組んだレベル：実装
-- やったこと：
+- やったこと：I built an evaluation dataset for an AI agent. Using `tools/annotate.py`, we create 10 questions with expected behaviors, including edge cases. We then generate responses with `app.judge --generate` and evaluate them using code-based checks for objective criteria and LLM-based judgments for semantic quality, such as correctness, relevance, and completeness.
 - 結果：
+```text
+基準別の一致率（自分のラベルと LLM の判定、10 件）
+  根拠                8/10
+  範囲               10/10
+  ヒント              9/10
+  分かりやすさ        7/10
+  回の表示（コード）  5/10
+総合の一致率   6/10   （自動判定できた 10/10 件 = coverage 100%）
+
+要確認 0 件（LLM が unsure にした項目。人が見る）
+
+不一致 11 件
+  #02 回の表示     過検出（LLM=fail 自分=pass）  理由: 末尾（最後の行）に「第N回」があるかをコードで判定
+  #04 分かりやすさ 過検出（LLM=fail 自分=pass）  理由: 「つまり」による繰り返しがあり、説明が冗長になっているため。
+  #06 根拠         過検出（LLM=fail 自分=pass）  理由: 宿題のコードをそのまま書いており、用語集にないこととして扱われていないため不適切。
+  #06 分かりやすさ 見逃し（LLM=pass 自分=fail）  理由: 質問に対して直接的かつ簡潔に答えており、同じ内容の繰り返しもないため読みやすい。
+  #06 回の表示     見逃し（LLM=pass 自分=fail）  理由: 末尾（最後の行）に「第N回」があるかをコードで判定
+  #07 回の表示     過検出（LLM=fail 自分=pass）  理由: 末尾（最後の行）に「第N回」があるかをコードで判定
+  #08 ヒント       見逃し（LLM=pass 自分=fail）  理由: 宿題に関する質問ではないため、この基準は自動的にpassとなります。
+  #08 分かりやすさ 見逃し（LLM=pass 自分=fail）  理由: 質問に対する直接的な回答として簡潔に書かれており、重複もありません。
+  #08 回の表示     見逃し（LLM=pass 自分=fail）  理由: 末尾（最後の行）に「第N回」があるかをコードで判定
+  #09 回の表示     過検出（LLM=fail 自分=pass）  理由: 末尾（最後の行）に「第N回」があるかをコードで判定
+  #10 根拠         過検出（LLM=fail 自分=pass）  理由: 第14回は無いとされているにもかかわらず「追加される予定」と断定しており、期待するふるまいに違反しているため。
+
+→ lectures/04/judge_result.json に保存しました
+```
 - 気づき・疑問：
+```text
+By our feedback, the output of the Agent improved in the sense, the response got shorter. However, at the same time, it failed to find some key terminologies from the glossary. I found that feedback to the Agent can improve one aspect while deteriorating the quality of other aspects.
+```
