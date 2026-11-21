@@ -27,9 +27,22 @@
 
 <!-- 基礎・実装・発展のどれか1つに取り組めば完了です。 -->
 
-- 取り組んだレベル：基礎 / 実装 / 発展
-- やったこと（変更したファイル・設定・処理、または設計した取得方法）：
-- 比較した質問と、固定した条件（モデル・対象資料など）：
-- 結果（変更前後の回答・根拠、`--trace`の出力、時間・トークン数・生成API推定費用など）：
-- 改善した例と、残る失敗・制約：
-- 気づき・疑問：
+- 取り組んだレベル：発展
+- やったこと（変更したファイル・設定・処理、または設計した取得方法）： Implemented `select_retrieval_method()` in `app/retrieval.py` and added `--route` to `app/agent.py`. Document/index navigation terms select Tree; terminology comparisons and relationships select Graph; other questions use vector search. Tree matching has priority when a query matches both groups. The routing is a deterministic keyword heuristic, not an LLM classifier.
+- 比較した質問と、固定した条件（モデル・対象資料など）： "What is the difference between RAG and finetuning?" is the target question. The model and the target resource were fixed.
+- 結果（変更前後の回答・根拠、`--trace`の出力、時間・トークン数・生成API推定費用など）： The router selects Graph for the comparison question (`[retrieval] graph`); it uses the existing `search_graph` tool and graph instructions. The earlier vector and Graph measurements in the table above are the baseline runs, not a separately measured `--route` run. I did not rerun the live Gemini comparison, so routed answer/citations and time, token, and cost measurements remain unverified. The routing tests passed (12 focused tests total).
+
+  Run the following in one terminal to capture the comparable live results and check all three routes:
+
+  ```bash
+  AIE_QUESTION='What is the difference between RAG and finetuning?'
+  uv run python -m app.agent --trace "$AIE_QUESTION"
+  uv run python -m app.agent --route --trace "$AIE_QUESTION"
+  uv run python -m app.agent --route --trace 'Which documents and indexes cover RAG?'
+  uv run python -m app.agent --route --trace 'How does LoRA work?'
+  uv run --frozen pytest -q tests/test_tools.py tests/test_agent.py
+  ```
+
+  Record the selected route, actual answer and cited pages, `[tool call]` arguments/count, `[time]`, `[usage]` input/output tokens and response count, and `[cost]`. For the target question the routed run should select Graph; compare it with the default vector run above under the same model and document scope.
+- 改善した例と、残る失敗・制約： The RAG-versus-finetuning question is routed to Graph, which is intended for relationships between terms. An explicit document/index lookup is routed to Tree, and a general explanation falls back to vector search. Keyword matching can misclassify ambiguous wording or a question that mentions a document without asking to navigate the materials; Graph can also add related pages that do not contain the answer.
+- 気づき・疑問： Routing makes the retrieval method follow the apparent question intent without requiring a separate command-line choice. It does not itself improve answer quality: the routing rules and retrieved evidence still need to be checked with `--trace`, and the live routed comparison remains to be measured.

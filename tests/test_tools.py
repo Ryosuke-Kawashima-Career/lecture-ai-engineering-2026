@@ -3,6 +3,7 @@
 import json
 
 from app import tools
+from app.retrieval import select_retrieval_method
 
 
 def test_glossary_ids_are_unique_and_related_links_exist():
@@ -46,3 +47,17 @@ def test_default_question_of_lecture1_is_answerable_from_glossary():
     assert "3レベル" in DEFAULT_QUESTION
     hits = json.loads(tools.search_glossary("3レベル"))
     assert hits[0]["term"] == "宿題の3レベル"
+
+
+def test_retrieval_router_selects_tree_for_document_navigation():
+    assert select_retrieval_method("Which documents and indexes cover this topic?") == "tree"
+    assert select_retrieval_method("関連資料はどの回にありますか？") == "tree"
+
+
+def test_retrieval_router_selects_graph_for_term_relationships():
+    assert select_retrieval_method("What is the difference between RAG and finetuning?") == "graph"
+    assert select_retrieval_method("LoRAとQLoRAの違いは？") == "graph"
+
+
+def test_retrieval_router_defaults_to_vector_search():
+    assert select_retrieval_method("How does LoRA work?") == "vector"

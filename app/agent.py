@@ -3,6 +3,7 @@
 使い方:
     uv run python -m app.agent "LoRAとQLoRAの違いは？"
     uv run python -m app.agent --trace "LoRAとQLoRAの違いは？"   # ツール呼び出しを表示
+    uv run python -m app.agent --route --trace "LoRAとQLoRAの違いは？"  # 質問に応じて検索方法を選択
     uv run python -m app.agent --graph --trace "LoRAとQLoRAの違いは？"  # 検索からグラフをたどって回答
     uv run python -m app.agent --tree --trace "LoRAとQLoRAの違いは？"  # 目次をたどって回答
     uv run python -m app.agent --full-context --trace "LoRAとQLoRAの違いは？"  # 全資料を一度に渡す
@@ -31,7 +32,7 @@ from pydantic_ai.models.test import TestModel
 from pydantic_ai.providers.google import GoogleProvider
 
 from app import tools
-from app.retrieval import run_full_context
+from app.retrieval import run_full_context, select_retrieval_method
 from app.config import MODEL, api_error_message, get_api_key
 
 INSTRUCTIONS = """\
@@ -181,13 +182,19 @@ def main() -> None:
     modes.add_argument("--mcp", action="store_true", help="第5回: ツールを MCP サーバー（app/mcp_servers.json）から受け取る")
     modes.add_argument("--graph", action="store_true", help="検索結果からグラフをたどり、候補ページを読んで答える")
     modes.add_argument("--tree", action="store_true", help="目次をたどり、必要なページを読んで答える")
+    modes.add_argument("--route", action="store_true", help="質問の意図に応じてTree・Graph・ベクトル検索を選ぶ")
     modes.add_argument("--full-context", action="store_true", help="検索せず、lectures.jsonの全資料を一度に渡す")
     parser.add_argument("--list-tools", action="store_true", help="モデルに見えるツール一覧を表示して終了する（APIキー不要）")
     args = parser.parse_args()
 
     target = build_mcp_agent() if args.mcp else agent
     mode = nullcontext()
-    if args.tree:
+    routed_method = select_retrieval_method(args.question) if args.route and args.question else None
+    if args.route and routed_method == "tree":
+        mode = target.override(instructions=TREE_INSTRUCTIONS, tools=[tools.browse_tree])
+    elif args.route and routed_method == "graph":
+        mode = target.override(instructions=GRAPH_INSTRUCTIONS, tools=[tools.search_graph])
+    elif args.tree:
         mode = target.override(instructions=TREE_INSTRUCTIONS, tools=[tools.browse_tree])
     elif args.graph:
         mode = target.override(instructions=GRAPH_INSTRUCTIONS, tools=[tools.search_graph])
@@ -205,6 +212,8 @@ def main() -> None:
         print(f"[model] {MODEL}")
         if args.mcp:
             print("[tools] MCP サーバー（app/mcp_servers.json）")
+        if routed_method:
+            print(f"[retrieval] {routed_method}")
 
         started = perf_counter()
         try:

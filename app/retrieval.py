@@ -5,6 +5,7 @@ import json
 import math
 import re
 import sqlite3
+from typing import Literal
 from contextlib import contextmanager
 from collections import defaultdict, deque
 from pathlib import Path
@@ -19,6 +20,31 @@ from app.config import (
     RAG_DB, RAG_DOCUMENT_IDS, RAG_SOURCE, RAG_TOP_K, RAG_TREE, get_api_key,
     RAG_GRAPH, GRAPH_START_K, GRAPH_HOPS, GRAPH_MAX_RESULTS,
 )
+
+
+RetrievalMethod = Literal["tree", "graph", "vector"]
+
+
+def select_retrieval_method(query: str) -> RetrievalMethod:
+    """質問の意図からTree・Graph・ベクトル検索の取得方法を選ぶ。"""
+    normalized = query.casefold()
+    tree_terms = (
+        "目次", "階層", "資料構成", "講義一覧", "関連資料", "どの回", "どのページ",
+        "どの資料", "どこに書", "資料を探", "文書を探", "index", "indexes",
+        "indices", "document", "documents", "material", "materials", "lecture",
+        "lectures", "table of contents", "hierarchy", "outline",
+    )
+    if any(term in normalized for term in tree_terms):
+        return "tree"
+
+    graph_terms = (
+        "違い", "どう違", "何が違", "比較", "関係", "関連", "つながり", "共通点",
+        "対比", "difference", "different", "compare", "comparison", "relationship",
+        "relation", "related", "between", "versus", " vs ",
+    )
+    if any(term in normalized for term in graph_terms):
+        return "graph"
+    return "vector"
 
 
 def get_all_materials() -> str:
